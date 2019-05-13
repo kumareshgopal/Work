@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Devops ETL", "Devops ETL.dtproj", "{BD73C162-0F81-41F1-92AB-7F7E60DCB953}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Devops DB", "..\Devops DB\Devops DB.sqlproj", "{251325F2-3A85-4FD7-A23C-9CB70A0C776E}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://uktfsdev01.talbotdev.com:8080/tfs/groupbicollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\Devops\u0020DB\\Devops\u0020DB.sqlproj
+		SccProjectName1 = ../Devops\u0020DB
+		SccLocalPath1 = ..\\Devops\u0020DB
+		SccProjectUniqueName2 = Devops\u0020ETL.dtproj
+		SccLocalPath2 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Development|Any CPU = Development|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD73C162-0F81-41F1-92AB-7F7E60DCB953}.Debug|Any CPU.ActiveCfg = Development
+		{BD73C162-0F81-41F1-92AB-7F7E60DCB953}.Debug|Any CPU.Build.0 = Development
+		{BD73C162-0F81-41F1-92AB-7F7E60DCB953}.Development|Any CPU.ActiveCfg = Development
+		{BD73C162-0F81-41F1-92AB-7F7E60DCB953}.Development|Any CPU.Build.0 = Development
+		{BD73C162-0F81-41F1-92AB-7F7E60DCB953}.Release|Any CPU.ActiveCfg = Development
+		{BD73C162-0F81-41F1-92AB-7F7E60DCB953}.Release|Any CPU.Build.0 = Development
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Development|Any CPU.Deploy.0 = Debug|Any CPU
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{251325F2-3A85-4FD7-A23C-9CB70A0C776E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

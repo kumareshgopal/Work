@@ -1,0 +1,403 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/4/2018 1:52:36 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="UKC10N1M1"
+  DTS:CreatorName="GLOBALDEV\kumaresh.gopalsamy"
+  DTS:DTSID="{78D4829A-5AD6-45CE-9843-9870B3E72E7D}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.7001.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="DBSizeCheck"
+  DTS:PackageType="5"
+  DTS:VersionBuild="29"
+  DTS:VersionGUID="{F4AFE558-CB4D-42FB-9549-F3F76B54F661}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{ACDC3502-EAAD-4E91-8C0D-F93451C5A1EF}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=smtp.talbotdev.com;UseWindowsAuthentication=False;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DDF3901F-8A4F-430B-B8A1-3E8EC4F44762}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AvaillableDrivesize">
+      <DTS:VariableValue
+        DTS:DataType="14">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3B4908D8-6D9A-4F2F-86BA-614795B7EF65}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DBSizetorestore">
+      <DTS:VariableValue
+        DTS:DataType="14">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{27CB8911-704A-4EE4-AD40-F9D24C9DC33E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Script">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{443F49A0-74A3-4147-A89B-2BFB6D93C7DA}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Available Drive Size"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{3B703A1A-B408-4029-B7F4-8FFCD6D9B205}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Available Drive Size"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{432719CB-1F1D-425B-B8A8-E5087C9CFED6}"
+              SQLTask:SqlStatementSource="IF OBJECT_ID('tempdb.dbo.#temp_xpfixeddrives', 'U') IS NOT NULL&#xA;  DROP TABLE #temp_xpfixeddrives; &#xA; &#xA;CREATE TABLE #temp_xpfixeddrives (Drive varchar(2) NOT NULL, MB_available int NOT NULL)&#xA;&#xA;&#xA;INSERT INTO #temp_xpfixeddrives (Drive, MB_available)&#xA;EXEC master.dbo.xp_fixeddrives&#xA;&#xA;Select MB_available from #temp_xpfixeddrives where drive ='F'"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="MB_available"
+                SQLTask:DtsVariableName="User::AvaillableDrivesize" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Execute Failed DBs"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{856B46FA-D964-4540-9C88-629A33763616}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute Failed DBs"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{6D43DE1D-7528-4EE0-8441-F5B1B48BA88B}"
+              SQLTask:SqlStatementSource="select ? as scrip  into  test" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::Script"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Send Mail Task"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Send Mail Task"
+          DTS:DTSID="{F97D0305-F688-41A9-811D-1A614DB2BFB1}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Send Mail Task"
+          DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="MessageSource">"Dear All,
+
+ 
+
+The Available free space in the F Drive is "+ (DT_WSTR, 10) @[User::AvaillableDrivesize]  + "  MB but the Actual size required to restore is " +  (DT_WSTR, 10)  @[User::DBSizetorestore] + " MB"</DTS:PropertyExpression>
+          <DTS:PropertyExpression
+            DTS:Name="Subject">"Warning - " + (DT_WSTR, 10)  @[User::AvaillableDrivesize] + "  MB Low Disk space to restore"</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <SendMailTask:SendMailTaskData
+              SendMailTask:SMTPServer="{ACDC3502-EAAD-4E91-8C0D-F93451C5A1EF}"
+              SendMailTask:From="noreply@talbotuw.com"
+              SendMailTask:To="kumaresh.gopalsamy@talbotuw.com"
+              SendMailTask:Subject="Warning - 0  MB Low Disk space to restore"
+              SendMailTask:MessageSource="Dear All,&#xA;&#xA; &#xA;&#xA;The Available free space in the F Drive is 0  MB but the Actual size required to restore is 0 MB" xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Size Check"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{69A22D8B-3833-4074-92B2-643D04BEBFC9}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Size Check"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{324AC591-0DB7-4A83-AA41-CCA15B9E2151}"
+              SQLTask:SqlStatementSource="IF  (?)  &gt;  (?)&#xA;&#xA;&#x9;BEGIN&#xA;  &#x9;&#x9;SELECT &#xA;&#x9;&#x9;&#x9;replace((STUFF((SELECT ';' +char(13) + RestoreScript &#xA;&#x9;&#x9;from &#xA;&#x9;&#x9;&#x9;[Devops].[BatchExecution] a&#xA;&#x9;&#x9;inner join devops.BackupRestoreConfig  b on a.BackupRestoreConfigID=b.BackupRestoreConfigID&#xA;&#x9;&#x9;inner  join devops.ExecutionPlan c on c.BatchExecutionId=a.BatchExecutionId&#xA;&#x9;&#x9;where &#xA;&#x9;&#x9;&#x9;a.errordesc is not null&#xA;&#x9;&#x9;&#x9;and convert(date,BatchStart,112) =convert(Date,getdate(),112)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;FOR XML PATH('')) ,1,1,'')),'&amp;#x0D;',CHAR(13))  as RestoreScript &#xA;&#x9;END&#xA;ELSE&#xA;&#x9;BEGIN&#xA;&#x9;&#x9;select '1' as RestoreScript&#xA;&#x9;END"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="RestoreScript"
+                SQLTask:DtsVariableName="User::Script" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::DBSizetorestore"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="4"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::AvaillableDrivesize"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="4"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Total DB Size"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{1E57226D-8F76-45BE-AE4E-D6E1F80A5B77}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Total DB Size"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{324AC591-0DB7-4A83-AA41-CCA15B9E2151}"
+              SQLTask:SqlStatementSource="&#xA;SELECT &#xA;&#x9;--d.name as database_name,&#xA;&#x9;ROUND(SUM(mf.size) * 8 / 1024, 0) total_dbsize_mb&#xA; --&#x9;into #temp_size&#xA;FROM &#xA;&#x9;sys.master_files mf&#xA;&#x9;INNER JOIN sys.databases d ON d.database_id = mf.database_id&#xA;where &#xA;&#x9;d.name in (&#xA;&#x9;&#x9;&#x9;SELECT &#xA;&#x9;&#x9;&#x9;&#x9;DatabaseName collate SQL_Latin1_General_CP1_CI_AS&#xA;            from &#xA;&#x9;&#x9;&#x9;&#x9;[Devops].[BatchExecution] a&#xA;&#x9;&#x9;&#x9;inner join devops.BackupRestoreConfig  b on a.BackupRestoreConfigID=b.BackupRestoreConfigID&#xA;&#x9;&#x9;&#x9;inner  join devops.ExecutionPlan c on c.BatchExecutionId=a.BatchExecutionId&#xA;&#x9;&#x9;&#x9;where &#xA;&#x9;&#x9;&#x9;&#x9;a.errordesc is not null&#xA;&#x9;&#x9;&#x9;&#x9;and convert(date,BatchStart,112) =convert(Date,getdate(),112)&#xA;&#x9; )&#xA;"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="total_dbsize_mb"
+                SQLTask:DtsVariableName="User::DBSizetorestore" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{160A4C9E-384D-46B5-8573-CD5DFF418B2F}"
+          DTS:From="Package\Sequence Container\Total DB Size"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container\Available Drive Size" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{F3724BEB-B233-4188-8E9E-FA4CEEC86824}"
+          DTS:From="Package\Sequence Container\Available Drive Size"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Sequence Container\Size Check" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{F26847EB-C3F5-436B-B3B2-4A3630EA5436}"
+          DTS:EvalOp="1"
+          DTS:Expression="@[User::Script]  != &quot;1&quot;"
+          DTS:From="Package\Sequence Container\Size Check"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Sequence Container\Execute Failed DBs" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{40993292-0635-4B30-824E-19048AC587C4}"
+          DTS:EvalOp="1"
+          DTS:Expression="@[User::Script] ==&quot;1&quot;"
+          DTS:From="Package\Sequence Container\Size Check"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Sequence Container\Send Mail Task" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Sequence Container\Available Drive Size"
+          TopLeft="5.50000000000001,107.5" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\Sequence Container\Execute Failed DBs"
+          TopLeft="7.00000000000003,311.5" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Sequence Container\Send Mail Task"
+          TopLeft="216,313" />
+        <NodeLayout
+          Size="129,42"
+          Id="Package\Sequence Container\Size Check"
+          TopLeft="26.5,209.5" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Sequence Container\Total DB Size"
+          TopLeft="20,5.5" />
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          TopLeft="91,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          TopLeft="91,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
+          TopLeft="91,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,18.25,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
+          TopLeft="111.166666666667,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="179.833333333333,61.5"
+              Start="0,0"
+              End="179.833333333333,54">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.052067381317" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.052067381317"
+                    Point2="0,25.052067381317"
+                    Point3="4,25.052067381317" />
+                  <mssgle:LineSegment
+                    End="175.833333333333,25.052067381317" />
+                  <mssgle:CubicBezierSegment
+                    Point1="175.833333333333,25.052067381317"
+                    Point2="179.833333333333,25.052067381317"
+                    Point3="179.833333333333,29.052067381317" />
+                  <mssgle:LineSegment
+                    End="179.833333333333,54" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="81.9166666666667,30.052067381317,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Need to add dynamic connection"
+          ParentId="Package\Sequence Container"
+          FontInfo="{assembly:Null}"
+          Size="205,60"
+          Id="d5babbe1-9bff-4b8e-8b04-a50191c79ab3"
+          TopLeft="234,109" />
+        <AnnotationLayout
+          Text="Need to add dynamic connection"
+          ParentId="Package\Sequence Container"
+          FontInfo="{assembly:Null}"
+          Size="205,40"
+          Id="103ccab1-444e-4a0f-a08a-0002d4563d3a"
+          TopLeft="12.5,374" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="444,510"
+          Size="444,553"
+          Id="Package\Sequence Container"
+          TopLeft="175.5,25.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

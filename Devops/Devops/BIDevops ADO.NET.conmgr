@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="BIDevops ADO.NET"
+  DTS:DTSID="{255CC9B9-B37B-43AB-95E3-808E6314B98A}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=UKBIDBFTO01;Initial Catalog=Devops;Integrated Security=True;Application Name=SSIS-DevopsWork-{255CC9B9-B37B-43AB-95E3-808E6314B98A}UKBIDBREG01.BIDevops1;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
